@@ -55,30 +55,30 @@ class ConstructorPlugin : XWVTestCase {
 
     func testConstructor() {
         let desc = "constructor"
-        let script = "if (\(namespace) instanceof Function) fulfill('\(desc)')"
+        let script = "setTimeout(function(){if (\(namespace) instanceof Function) fulfill('\(desc)');}, 100);"
         _ = expectation(description: desc)
         loadPlugin(Plugin0(expectation: nil), namespace: namespace, script: script)
-        waitForExpectations()
+        waitForExpectations(timeout: 20)
     }
     func testConstruction() {
         let desc = "construction"
-        let script = "new \(namespace)(expectation('\(desc)'))"
+        let script = "setTimeout(function(){new \(namespace)(expectation('\(desc)'))}, 100);"
         _ = expectation(description: desc)
         loadPlugin(Plugin0(expectation: nil), namespace: namespace, script: script)
-        waitForExpectations()
+        waitForExpectations(timeout: 20)
     }
     func testSyncProperties() {
         let desc = "syncProperties"
-        let script = "(new \(namespace)(456)).then(function(o){if (o.property==456) fulfill('\(desc)');})"
+        let script = "setTimeout(function(){(new \(namespace)(456)).then(function(o){if (o.property==456) fulfill('\(desc)');});}, 100);"
         _ = expectation(description: desc)
         loadPlugin(Plugin1(value: 123), namespace: namespace, script: script)
-        waitForExpectations()
+        waitForExpectations(timeout: 20)
     }
     func testFinalizeForScript() {
         let desc = "finalizeForScript"
-        let script = "(new \(namespace)(expectation('\(desc)'))).then(function(o){o.dispose();})"
+        let script = "setTimeout(function(){(new \(namespace)(expectation('\(desc)'))).then(function(o){o.dispose();});}, 100);"
         _ = expectation(description: desc)
         loadPlugin(Plugin2(expectation: nil), namespace: namespace, script: script)
-        waitForExpectations()
+        waitForExpectations(timeout: 20)
     }
 }

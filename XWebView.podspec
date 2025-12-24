@@ -32,7 +32,7 @@ Pod::Spec.new do |s|
                    will be no longer a second-class citizen on iOS platform.
                    DESC
 
-  s.homepage     = "https://github.com/XWebView/XWebView"
+  s.homepage     = "https://github.com/Andyirong/XWebView"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -78,7 +78,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/XWebView/XWebView.git", :tag => s.version.to_s }
+  s.source       = { :git => "https://github.com/Andyirong/XWebView.git", :tag => s.version.to_s }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
