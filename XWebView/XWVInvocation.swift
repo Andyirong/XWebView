@@ -123,7 +123,7 @@ var NSInvocation: NSInvocationProtocol.Type = {
             let obj = UnsafeRawPointer(buffer).load(as: AnyObject.self)
             Unmanaged.passUnretained(obj).release()
         }
-        buffer.deallocate(capacity: Int(sig.methodReturnLength))
+        buffer.deallocate()
     }
     return octype.loadValue(from: buffer)
 }
@@ -187,9 +187,9 @@ private enum ObjCType : CChar {
         case .bool:      return pointer.load(as: CBool.self)
         case .void:      return Void()
         case .string:    return pointer.load(as: UnsafePointer<CChar>.self)
-        case .object:    return pointer.load(as: AnyObject!.self)
-        case .clazz:     return pointer.load(as: AnyClass!.self)
-        case .selector:  return pointer.load(as: Selector!.self)
+        case .object:    return pointer.load(as: AnyObject?.self)
+        case .clazz:     return pointer.load(as: AnyClass?.self)
+        case .selector:  return pointer.load(as: Selector?.self)
         case .pointer:   return pointer.load(as: OpaquePointer.self)
         case .unknown:   fatalError("Unknown ObjC type")
         }
@@ -290,9 +290,9 @@ public class XWVInvocation {
     }
 
     // Syntactic sugar for calling method
-    public subscript (selector: Selector) -> (Any?...)->Any! {
+    public subscript (selector: Selector) -> (Any?...)->Any? {
         return {
-            (args: Any?...)->Any! in
+            (args: Any?...)->Any? in
             self.call(selector, with: args)
         }
     }
@@ -300,7 +300,7 @@ public class XWVInvocation {
 
 extension XWVInvocation {
     // Property accessor
-    public func value(of name: String) -> Any! {
+    public func value(of name: String) -> Any? {
         guard let getter = getter(of: name) else {
             assertionFailure("Property '\(name)' does not exist")
             return Void()

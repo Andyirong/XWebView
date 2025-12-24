@@ -17,6 +17,10 @@
 import Foundation
 import ObjectiveC
 
+private func selectorToString(_ selector: Selector) -> String {
+    return NSStringFromSelector(selector)
+}
+
 class XWVMetaObject {
     enum Member {
         case Method(selector: Selector, arity: Int32)
@@ -62,8 +66,8 @@ class XWVMetaObject {
             let arity: Int32
             switch self {
             case let .Method(selector, a):
-                promise = selector.description.hasSuffix(":promiseObject:") ||
-                          selector.description.hasSuffix("PromiseObject:")
+                promise = selectorToString(selector).hasSuffix(":promiseObject:") ||
+                          selectorToString(selector).hasSuffix("PromiseObject:")
                 arity = a
             case let .Initializer(_, a):
                 promise = true
@@ -169,7 +173,7 @@ class XWVMetaObject {
                     attr = property_copyAttributeValue(propertyList[i], "S")
                     if attr == nil {
                         setter = Selector("set\(name.prefix(1).uppercased())\(name.dropFirst()):")
-                        print(setter!.description)
+                        print(selectorToString(setter!))
                     } else {
                         setter = Selector(String(cString: attr!))
                     }
@@ -193,15 +197,15 @@ class XWVMetaObject {
             defer { free(methodList) }
             for i in 0 ..< Int(count) {
                 let sel = method_getName(methodList[i])
-                if !known.contains(sel) && !sel.description.hasPrefix(".") {
+                if !known.contains(sel) && !selectorToString(sel).hasPrefix(".") {
                     let arity = Int32(method_getNumberOfArguments(methodList[i])) - 2
                     let member: Member
-                    if sel.description.hasPrefix("init") {
+                    if selectorToString(sel).hasPrefix("init") {
                         member = Member.Initializer(selector: sel, arity: arity)
                     } else {
                         member = Member.Method(selector: sel, arity: arity)
                     }
-                    let name = sel.description.prefix(while: {$0 != ":"})
+                    let name = selectorToString(sel).prefix(while: {$0 != ":"})
                     if !callback(String(name), member) {
                         return false
                     }

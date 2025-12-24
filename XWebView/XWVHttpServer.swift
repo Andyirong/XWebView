@@ -74,7 +74,7 @@ class XWVHttpServer : NSObject {
             sin_addr: in_addr(s_addr: UInt32(0x7f000001).bigEndian),
             sin_zero: (0, 0, 0, 0, 0, 0, 0, 0))
         let data = Data(bytes: &sockaddr, count: MemoryLayout<sockaddr_in>.size)
-        guard CFSocketSetAddress(socket, data as CFData!) == CFSocketError.success else {
+        guard CFSocketSetAddress(socket, data as CFData?) == CFSocketError.success else {
             log("!Failed to listen on port \(port) \(String(cString: strerror(errno)))")
             CFSocketInvalidate(socket)
             return false
@@ -115,11 +115,11 @@ class XWVHttpServer : NSObject {
         #if os(iOS)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(XWVHttpServer.suspend(_:)),
-                                               name: NSNotification.Name.UIApplicationDidEnterBackground,
+                                               name: UIApplication.didEnterBackgroundNotification,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(XWVHttpServer.resume(_:)),
-                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
         #endif
         return true
@@ -127,8 +127,8 @@ class XWVHttpServer : NSObject {
 
     func stop() {
         #if os(iOS)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
         #endif
         port = 0
         close()

@@ -103,9 +103,11 @@ public func jsonify(_ value: Any?) -> String? {
     case let o as ObjCJSONStringable:
         return o.jsonString
     case let d as Data:
-        return d.withUnsafeBytes {
-            (base: UnsafePointer<UInt8>) -> String? in
-            jsonify(UnsafeBufferPointer<UInt8>(start: base, count: d.count))
+        return d.withUnsafeBytes { (rawBufferPointer: UnsafeRawBufferPointer) in
+            guard let base = rawBufferPointer.baseAddress?.assumingMemoryBound(to: UInt8.self) else {
+                return nil
+            }
+            return jsonify(UnsafeBufferPointer<UInt8>(start: base, count: d.count))
         }
     default:
         let mirror = Mirror(reflecting: value)

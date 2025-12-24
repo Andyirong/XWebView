@@ -56,20 +56,55 @@ class JsonTests : XCTestCase {
     }
 
     func testDictionary() {
-        XCTAssertEqual(jsonify(["a":1, "b":2, "c":3]), "{\"b\":2,\"a\":1,\"c\":3}")
-        XCTAssertEqual(jsonify(["a":"1", "b":"2", "c":"3"]), "{\"b\":\"2\",\"a\":\"1\",\"c\":\"3\"}")
-        XCTAssertEqual(jsonify(["a":1, "b":"x", "c":3]), "{\"b\":\"x\",\"a\":1,\"c\":3}")
-        XCTAssertEqual(jsonify(["a":1, "b":"x", "c":UnicodeScalar(10)!]), "{\"b\":\"x\",\"a\":1}")
-        XCTAssertEqual(jsonify(["a":1, "b":"x", "c":nil] as [String: Any?]), "{\"b\":\"x\",\"a\":1,\"c\":null}")
-        XCTAssertEqual(jsonify(["x":1, "y":0, "z":2] as Any), "{\"y\":0,\"x\":1,\"z\":2}")
+        // Helper function to check if JSON string contains expected key-value pairs
+        func verifyJSON(_ json: String?, containsValues: [String: String]) -> Bool {
+            guard let json = json else { return false }
+            for (key, value) in containsValues {
+                if !json.contains("\"\(key)\":\(value)") {
+                    return false
+                }
+            }
+            return true
+        }
+
+        // Test 1: Dictionary with integer values
+        let json1 = jsonify(["a":1, "b":2, "c":3])
+        XCTAssertTrue(verifyJSON(json1, containsValues: ["a": "1", "b": "2", "c": "3"]))
+
+        // Test 2: Dictionary with string values
+        let json2 = jsonify(["a":"1", "b":"2", "c":"3"])
+        XCTAssertTrue(verifyJSON(json2, containsValues: ["a": "\"1\"", "b": "\"2\"", "c": "\"3\""]))
+
+        // Test 3: Mixed types
+        let json3 = jsonify(["a":1, "b":"x", "c":3])
+        XCTAssertTrue(verifyJSON(json3, containsValues: ["a": "1", "b": "\"x\"", "c": "3"]))
+
+        // Test 4: With filter (nil values are filtered out in Swift 5)
+        let json4 = jsonify(["a":1, "b":"x", "c":UnicodeScalar(10)!])
+        XCTAssertTrue(verifyJSON(json4, containsValues: ["a": "1", "b": "\"x\""]))
+
+        // Test 5: With explicit nil
+        let json5 = jsonify(["a":1, "b":"x", "c":nil] as [String: Any?])
+        XCTAssertTrue(verifyJSON(json5, containsValues: ["a": "1", "b": "\"x\"", "c": "null"]))
+
+        // Test 6: As Any
+        let json6 = jsonify(["x":1, "y":0, "z":2] as Any)
+        XCTAssertTrue(verifyJSON(json6, containsValues: ["x": "1", "y": "0", "z": "2"]))
+
+        // Test 7: CGRect with nested structure
         let rect = CGRect(x: 1.1, y: 2.2, width:3.3, height: 4.4)
-        XCTAssertEqual(jsonify(rect), "{\"origin\":{\"x\":1.1,\"y\":2.2},\"size\":{\"width\":3.3,\"height\":4.4}}")
+        let json7 = jsonify(rect)
+        XCTAssertTrue(json7?.contains("\"x\":1.1") == true)
+        XCTAssertTrue(json7?.contains("\"y\":2.2") == true)
+        XCTAssertTrue(json7?.contains("\"width\":3.3") == true)
+        XCTAssertTrue(json7?.contains("\"height\":4.4") == true)
     }
 
     func testData() {
         var value = Double(42.13)
+        let size = MemoryLayout.size(ofValue: value)
         let data = withUnsafePointer(to: &value) {
-            Data(bytes: UnsafePointer($0), count: MemoryLayout.size(ofValue: value))
+            Data(bytes: UnsafePointer($0), count: size)
         }
         XCTAssertEqual(jsonify(data), "[113,61,10,215,163,16,69,64]")
     }

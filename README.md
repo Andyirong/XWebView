@@ -30,13 +30,15 @@ For more documents, please go to the project [Wiki](../../wiki).
 
 ## Minimum Requirements:
 
-* Development:  Xcode 8.2
+* Development:  Xcode 10.2
 * Deployment:   iOS 9.0
 
 ## XWebView vs. Swift
 
 | Swift |  XWebView  |
 | ----- | ---------- |
+| 5     |   1.0.0    |
+| 4     |   0.12.1   |
 | 3.1   |   0.12.1   |
 | 3.0.2 |   0.12.0   |
 | 3     |   0.11.0   |

@@ -132,5 +132,5 @@ func log(_ message: String, level: XWVLogging.Level? = nil) {
 
 func die(_ message: @autoclosure ()->String, file: StaticString = #file, line: UInt = #line) -> Never  {
     logger.log(message(), level: .Alert)
-    fatalError(message, file: file, line: line)
+    fatalError(message(), file: file, line: line)
 }

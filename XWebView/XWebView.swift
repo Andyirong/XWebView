@@ -34,11 +34,11 @@ extension WKWebView {
 
         let bundle = Bundle(for: XWVChannel.self)
         guard let path = bundle.path(forResource: "xwebview", ofType: "js"),
-            let source = try? NSString(contentsOfFile: path, encoding: String.Encoding.utf8.rawValue) else {
+            let source = try? String(contentsOfFile: path, encoding: .utf8) else {
             die("Failed to read provision script: xwebview.js")
         }
         let time = WKUserScriptInjectionTime.atDocumentStart
-        let script = WKUserScript(source: source as String, injectionTime: time, forMainFrameOnly: true)
+        let script = WKUserScript(source: source, injectionTime: time, forMainFrameOnly: true)
         let xwvplugin = XWVUserScript(webView: self, script: script, namespace: "XWVPlugin")
         objc_setAssociatedObject(self, key, xwvplugin, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         log("+WKWebView(\(self)) is ready for loading plugins")

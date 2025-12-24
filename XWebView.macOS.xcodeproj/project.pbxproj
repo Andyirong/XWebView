@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		964FBFCE2EFB792A0021BA21 /* XWVEdgeCasesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964FBFCC2EFB792A0021BA21 /* XWVEdgeCasesTest.swift */; };
+		964FBFD02EFB792A0021BA21 /* XWVConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964FBFCB2EFB792A0021BA21 /* XWVConcurrencyTest.swift */; };
 		EE9BCB921E12EFE700206DC3 /* XWebView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE9BCB881E12EFE600206DC3 /* XWebView.framework */; };
 		EE9BCBB31E12F09D00206DC3 /* XWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = EE9BCBA31E12F09D00206DC3 /* XWebView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EE9BCBB41E12F09D00206DC3 /* xwebview.js in Resources */ = {isa = PBXBuildFile; fileRef = EE9BCBA41E12F09D00206DC3 /* xwebview.js */; };
@@ -47,6 +49,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		964FBFCB2EFB792A0021BA21 /* XWVConcurrencyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XWVConcurrencyTest.swift; sourceTree = "<group>"; };
+		964FBFCC2EFB792A0021BA21 /* XWVEdgeCasesTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XWVEdgeCasesTest.swift; sourceTree = "<group>"; };
 		EE9BCB881E12EFE600206DC3 /* XWebView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XWebView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE9BCB911E12EFE700206DC3 /* XWebViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XWebViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE9BCBA21E12F09D00206DC3 /* Info.macOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.macOS.plist; sourceTree = "<group>"; };
@@ -144,6 +148,8 @@
 		EE9BCB951E12EFE700206DC3 /* XWebViewTests */ = {
 			isa = PBXGroup;
 			children = (
+				964FBFCB2EFB792A0021BA21 /* XWVConcurrencyTest.swift */,
+				964FBFCC2EFB792A0021BA21 /* XWVEdgeCasesTest.swift */,
 				EE9BCBE21E12F4B700206DC3 /* www */,
 				EE9BCBC21E12F20B00206DC3 /* ConstructorPlugin.swift */,
 				EE9BCBC31E12F20B00206DC3 /* FunctionPlugin.swift */,
@@ -243,6 +249,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = EE9BCB7E1E12EFE600206DC3;
@@ -303,6 +310,8 @@
 				EE9BCBD91E12F36900206DC3 /* FunctionPlugin.swift in Sources */,
 				EE9BCBDF1E12F38100206DC3 /* XWVScriptingTest.swift in Sources */,
 				EE9BCBDE1E12F37D00206DC3 /* XWVMetaObjectTest.swift in Sources */,
+				964FBFCE2EFB792A0021BA21 /* XWVEdgeCasesTest.swift in Sources */,
+				964FBFD02EFB792A0021BA21 /* XWVConcurrencyTest.swift in Sources */,
 				EE9BCBDA1E12F36D00206DC3 /* ObjectPlugin.swift in Sources */,
 				EE9BCBDB1E12F37100206DC3 /* XWebViewTests.swift in Sources */,
 				EE9BCBD81E12F36500206DC3 /* ConstructorPlugin.swift in Sources */,
@@ -448,7 +457,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.xwebview.XWebView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -469,7 +478,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.xwebview.XWebView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -482,7 +491,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.xwebview.XWebViewTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -495,7 +504,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.xwebview.XWebViewTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

@@ -16,8 +16,9 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "XWebView"
-  s.version      = "0.12.1"
+  s.version      = "1.0.0"
   s.summary      = "An extensible WebView (based on WKWebView)"
+  s.swift_version = "5.0"
 
   s.description  = <<-DESC
                    XWebView is an extensible WebView which is built on top of WKWebView,
